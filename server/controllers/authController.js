@@ -34,9 +34,14 @@ exports.register = async (req, res) => {
 
   await sendEmail({ to: email, template: 'otp', data: [name, otp] });
 
+  let message = 'Account created! Please verify your email with the OTP sent.';
+  if (!process.env.EMAIL_HOST) {
+    message = `Account created! (TEST MODE) Your OTP is: ${otp}`;
+  }
+
   res.status(201).json({
     success: true,
-    message: 'Account created! Please verify your email with the OTP sent.',
+    message,
     email,
   });
 };
@@ -104,7 +109,12 @@ exports.resendOTP = async (req, res) => {
 
   await sendEmail({ to: email, template: 'otp', data: [user.name, otp] });
 
-  res.json({ success: true, message: 'New OTP sent to your email' });
+  let message = 'New OTP sent to your email';
+  if (!process.env.EMAIL_HOST) {
+    message = `(TEST MODE) Your New OTP is: ${otp}`;
+  }
+
+  res.json({ success: true, message });
 };
 
 // ─── Login ───────────────────────────────────────────────────
