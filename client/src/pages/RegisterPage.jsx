@@ -33,8 +33,8 @@ export default function RegisterPage() {
   const onSubmit = async (data) => {
     try {
       await registerUser({ name: data.name, email: data.email, password: data.password });
-      toast.success('Account created! Check your email for the OTP.');
-      navigate('/verify-otp', { state: { email: data.email } });
+      toast.success('Account created! You can now log in.');
+      navigate('/login');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Registration failed');
     }

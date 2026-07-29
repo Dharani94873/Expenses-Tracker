@@ -18,30 +18,16 @@ exports.register = async (req, res) => {
     return res.status(409).json({ success: false, message: 'Email already registered' });
   }
 
-  const otp = generateOTP();
-  const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
-
   const user = await User.create({
     name,
     email,
     passwordHash: password,
-    otp,
-    otpExpiry,
+    isVerified: true, // Auto-verify without OTP
   });
-
-  // Seed default categories for new user (no personal categories yet)
-  // Default categories are userId=null so shared — no need to create
-
-  await sendEmail({ to: email, template: 'otp', data: [name, otp] });
-
-  let message = 'Account created! Please verify your email with the OTP sent.';
-  if (!process.env.EMAIL_HOST) {
-    message = `Account created! (TEST MODE) Your OTP is: ${otp}`;
-  }
 
   res.status(201).json({
     success: true,
-    message,
+    message: 'Account created successfully! You can now log in.',
     email,
   });
 };
