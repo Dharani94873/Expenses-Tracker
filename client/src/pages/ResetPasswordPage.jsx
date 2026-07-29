@@ -32,13 +32,13 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
       <div className="w-full max-w-md animate-slide-up">
         <div className="card p-8">
           <div className="text-center mb-8">
             <div className="text-5xl mb-3">🔐</div>
-            <h2 className="text-2xl font-bold text-slate-100 mb-2">Reset Password</h2>
-            <p className="text-slate-400">Choose a strong new password</p>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Reset Password</h2>
+            <p className="text-slate-500">Choose a strong new password</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -51,7 +51,7 @@ export default function ResetPasswordPage() {
                   placeholder="Min 8 chars with uppercase & number"
                   className="input pl-10 pr-10" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -76,7 +76,7 @@ export default function ResetPasswordPage() {
             </button>
           </form>
 
-          <Link to="/login" className="inline-block mt-6 text-sm text-slate-500 hover:text-slate-400">
+          <Link to="/login" className="inline-block mt-6 text-sm text-slate-500 hover:text-slate-500">
             ← Back to login
           </Link>
         </div>

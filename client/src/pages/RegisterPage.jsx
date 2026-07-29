@@ -41,12 +41,12 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
       <div className="w-full max-w-md animate-slide-up">
         <div className="text-center mb-8">
           <div className="text-5xl mb-3">💰</div>
           <h1 className="text-3xl font-bold gradient-text">Create Account</h1>
-          <p className="text-slate-400 mt-2">Start your journey to financial clarity</p>
+          <p className="text-slate-500 mt-2">Start your journey to financial clarity</p>
         </div>
 
         <div className="card p-8">
@@ -81,7 +81,7 @@ export default function RegisterPage() {
                   className={`input pl-10 pr-10 ${errors.password ? 'input-error' : ''}`}
                   {...register('password')} />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700">
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -99,7 +99,7 @@ export default function RegisterPage() {
               {errors.confirmPassword && <p className="error-msg">{errors.confirmPassword.message}</p>}
             </div>
 
-            <div className="bg-dark-700 rounded-xl p-3 text-xs text-slate-400 space-y-1">
+            <div className="bg-slate-100 rounded-xl p-3 text-xs text-slate-500 space-y-1">
               <p>✅ At least 8 characters</p>
               <p>✅ One uppercase letter</p>
               <p>✅ One number</p>
@@ -110,7 +110,7 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <p className="text-center text-slate-400 text-sm mt-6">
+          <p className="text-center text-slate-500 text-sm mt-6">
             Already have an account?{' '}
             <Link to="/login" className="text-primary-400 font-semibold hover:text-primary-300">Sign in</Link>
           </p>

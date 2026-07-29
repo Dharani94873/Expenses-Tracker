@@ -27,20 +27,20 @@ export default function Sidebar({ open, onClose }) {
       {/* Desktop: fixed; Mobile: slide-in */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-64 bg-dark-800 border-r border-dark-600 z-30
+          fixed top-0 left-0 h-full w-64 bg-white border-r border-slate-200 z-30
           flex flex-col transition-transform duration-300
           ${open ? 'translate-x-0' : '-translate-x-full'}
           lg:translate-x-0
         `}
       >
         {/* Logo */}
-        <div className="p-5 border-b border-dark-600 flex items-center justify-between">
+        <div className="p-5 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center text-lg shadow-glow-primary">
               💰
             </div>
             <div>
-              <p className="font-bold text-slate-100 text-sm leading-none">ExpenseTracker</p>
+              <p className="font-bold text-slate-900 text-sm leading-none">ExpenseTracker</p>
               <p className="text-xs text-slate-500 mt-0.5">Smart Finance</p>
             </div>
           </div>
@@ -50,13 +50,13 @@ export default function Sidebar({ open, onClose }) {
         </div>
 
         {/* User info */}
-        <div className="p-4 border-b border-dark-600">
+        <div className="p-4 border-b border-slate-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center text-white font-bold text-sm shadow-glow-primary flex-shrink-0">
               {user?.name?.[0]?.toUpperCase() || 'U'}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-slate-100 truncate">{user?.name}</p>
+              <p className="text-sm font-semibold text-slate-900 truncate">{user?.name}</p>
               <p className="text-xs text-slate-500 truncate">{user?.email}</p>
             </div>
           </div>
@@ -83,12 +83,12 @@ export default function Sidebar({ open, onClose }) {
         <div className="p-3 mx-3 mb-2 rounded-xl bg-gradient-card border border-primary-500/20">
           <div className="flex items-center gap-2 text-xs">
             <TrendingUp size={14} className="text-accent-green" />
-            <span className="text-slate-400">Track smarter, save more</span>
+            <span className="text-slate-500">Track smarter, save more</span>
           </div>
         </div>
 
         {/* Logout */}
-        <div className="p-3 border-t border-dark-600">
+        <div className="p-3 border-t border-slate-200">
           <button
             onClick={handleLogout}
             className="sidebar-link w-full text-accent-red hover:text-accent-red hover:bg-accent-red/10"

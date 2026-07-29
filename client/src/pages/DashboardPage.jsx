@@ -32,7 +32,7 @@ function StatCard({ icon: Icon, label, value, change, color, prefix = '$' }) {
       </div>
       <div>
         <p className="text-slate-500 text-xs font-medium uppercase tracking-wider">{label}</p>
-        <p className="text-2xl font-bold text-slate-100 mt-0.5">
+        <p className="text-2xl font-bold text-slate-900 mt-0.5">
           {prefix}{typeof value === 'number' ? value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : value}
         </p>
       </div>
@@ -44,7 +44,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="glass-card p-3 text-xs space-y-1">
-      <p className="font-semibold text-slate-200 mb-1">{MONTHS[label - 1]}</p>
+      <p className="font-semibold text-slate-800 mb-1">{MONTHS[label - 1]}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }}>{p.name}: ${p.value?.toLocaleString()}</p>
       ))}
@@ -57,7 +57,7 @@ const PieTooltip = ({ active, payload }) => {
   return (
     <div className="glass-card p-3 text-xs">
       <p className="font-semibold" style={{ color: payload[0].payload.color }}>{payload[0].name}</p>
-      <p className="text-slate-300">${payload[0].value?.toFixed(2)}</p>
+      <p className="text-slate-700">${payload[0].value?.toFixed(2)}</p>
     </div>
   );
 };
@@ -113,7 +113,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">
+          <h1 className="text-2xl font-bold text-slate-900">
             {greeting()}, {user?.name?.split(' ')[0]} 👋
           </h1>
           <p className="text-slate-500 text-sm mt-0.5">
@@ -151,8 +151,8 @@ export default function DashboardPage() {
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {budgetAlerts.map((alert, i) => (
-              <div key={i} className="flex items-center justify-between bg-dark-800 rounded-xl px-3 py-2">
-                <span className="text-sm text-slate-300">{alert.category.icon} {alert.category.name}</span>
+              <div key={i} className="flex items-center justify-between bg-white rounded-xl px-3 py-2">
+                <span className="text-sm text-slate-700">{alert.category.icon} {alert.category.name}</span>
                 <span className={`text-sm font-bold ${alert.percent >= 100 ? 'text-accent-red' : 'text-accent-amber'}`}>
                   {alert.percent}%
                 </span>
@@ -166,7 +166,7 @@ export default function DashboardPage() {
       <div className="grid lg:grid-cols-5 gap-4">
         {/* Monthly Trend - 3 columns */}
         <div className="lg:col-span-3 chart-container">
-          <h3 className="font-semibold text-slate-200 mb-4">Monthly Trend</h3>
+          <h3 className="font-semibold text-slate-800 mb-4">Monthly Trend</h3>
           {loading ? (
             <div className="skeleton h-56 rounded-xl" />
           ) : (
@@ -191,7 +191,7 @@ export default function DashboardPage() {
 
         {/* Spending by Category - 2 columns */}
         <div className="lg:col-span-2 chart-container">
-          <h3 className="font-semibold text-slate-200 mb-4">By Category</h3>
+          <h3 className="font-semibold text-slate-800 mb-4">By Category</h3>
           {loading ? (
             <div className="skeleton h-56 rounded-xl" />
           ) : data?.categoryBreakdown?.length > 0 ? (
@@ -210,12 +210,12 @@ export default function DashboardPage() {
               <div className="mt-3 space-y-1.5 max-h-24 overflow-y-auto scrollbar-hide">
                 {data.categoryBreakdown.slice(0, 5).map((cat, i) => (
                   <div key={i} className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-1.5 text-slate-400">
+                    <span className="flex items-center gap-1.5 text-slate-500">
                       <span className="w-2 h-2 rounded-full flex-shrink-0"
                         style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
                       {cat.icon} {cat.name}
                     </span>
-                    <span className="text-slate-200 font-medium">${cat.total.toFixed(0)}</span>
+                    <span className="text-slate-800 font-medium">${cat.total.toFixed(0)}</span>
                   </div>
                 ))}
               </div>
@@ -230,8 +230,8 @@ export default function DashboardPage() {
 
       {/* Recent Transactions */}
       <div className="card overflow-hidden">
-        <div className="px-5 py-4 border-b border-dark-600 flex items-center justify-between">
-          <h3 className="font-semibold text-slate-200">Recent Transactions</h3>
+        <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+          <h3 className="font-semibold text-slate-800">Recent Transactions</h3>
           <Link to="/transactions" className="text-sm text-primary-400 hover:text-primary-300">
             View all →
           </Link>
@@ -258,12 +258,12 @@ export default function DashboardPage() {
         ) : (
           <div className="divide-y divide-dark-700">
             {recentTx.map((tx) => (
-              <div key={tx._id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-dark-700/50 transition-colors">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg bg-dark-700 flex-shrink-0">
+              <div key={tx._id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-100/50 transition-colors">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg bg-slate-100 flex-shrink-0">
                   {tx.category?.icon || '💸'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-200 truncate">
+                  <p className="text-sm font-medium text-slate-800 truncate">
                     {tx.description || tx.category?.name}
                   </p>
                   <p className="text-xs text-slate-500">

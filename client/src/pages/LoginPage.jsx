@@ -52,7 +52,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex">
+    <div className="min-h-screen bg-slate-50 flex">
       {/* Left panel - decorative */}
       <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-dark-800 via-dark-700 to-dark-800 relative overflow-hidden items-center justify-center">
         <div className="absolute inset-0 overflow-hidden">
@@ -62,7 +62,7 @@ export default function LoginPage() {
         <div className="relative z-10 text-center p-12">
           <div className="text-6xl mb-6">💰</div>
           <h2 className="text-4xl font-bold gradient-text mb-4">ExpenseTracker</h2>
-          <p className="text-slate-400 text-lg max-w-sm mx-auto">
+          <p className="text-slate-500 text-lg max-w-sm mx-auto">
             Take control of your finances with smart budgeting and real-time insights.
           </p>
           <div className="mt-10 grid grid-cols-2 gap-4 text-left">
@@ -74,7 +74,7 @@ export default function LoginPage() {
             ].map(({ icon, title, desc }) => (
               <div key={title} className="glass-card p-4">
                 <div className="text-2xl mb-1">{icon}</div>
-                <p className="font-semibold text-slate-200 text-sm">{title}</p>
+                <p className="font-semibold text-slate-800 text-sm">{title}</p>
                 <p className="text-slate-500 text-xs">{desc}</p>
               </div>
             ))}
@@ -92,8 +92,8 @@ export default function LoginPage() {
           </div>
 
           <div className="card p-8 animate-slide-up">
-            <h2 className="text-2xl font-bold text-slate-100 mb-2">Welcome back</h2>
-            <p className="text-slate-400 mb-7">Sign in to your account</p>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Welcome back</h2>
+            <p className="text-slate-500 mb-7">Sign in to your account</p>
 
             {!requires2FA ? (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -126,7 +126,7 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
                     >
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
@@ -153,7 +153,7 @@ export default function LoginPage() {
               <div className="space-y-5 animate-fade-in">
                 <div className="text-center">
                   <div className="text-4xl mb-3">🔐</div>
-                  <p className="text-slate-300">Enter your 6-digit authentication code</p>
+                  <p className="text-slate-700">Enter your 6-digit authentication code</p>
                 </div>
                 <input
                   type="text"
@@ -172,7 +172,7 @@ export default function LoginPage() {
               </div>
             )}
 
-            <p className="text-center text-slate-400 text-sm mt-6">
+            <p className="text-center text-slate-500 text-sm mt-6">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary-400 font-semibold hover:text-primary-300">
                 Create one

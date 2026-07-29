@@ -67,12 +67,12 @@ export default function OTPVerifyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
       <div className="w-full max-w-md animate-slide-up">
         <div className="card p-8 text-center">
           <div className="text-5xl mb-4">📬</div>
-          <h2 className="text-2xl font-bold text-slate-100 mb-2">Check your email</h2>
-          <p className="text-slate-400 mb-2">We sent a 6-digit code to</p>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Check your email</h2>
+          <p className="text-slate-500 mb-2">We sent a 6-digit code to</p>
           <p className="text-primary-400 font-semibold mb-8">{email}</p>
 
           {/* OTP Input boxes */}
@@ -87,8 +87,8 @@ export default function OTPVerifyPage() {
                 value={digit}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
-                className={`w-12 h-14 text-center text-xl font-bold rounded-xl border-2 bg-dark-700 text-slate-100 outline-none transition-all duration-200
-                  ${digit ? 'border-primary-500 shadow-glow-primary' : 'border-dark-500 focus:border-primary-500 focus:shadow-glow-primary'}`}
+                className={`w-12 h-14 text-center text-xl font-bold rounded-xl border-2 bg-slate-100 text-slate-900 outline-none transition-all duration-200
+                  ${digit ? 'border-primary-500 shadow-glow-primary' : 'border-slate-300 focus:border-primary-500 focus:shadow-glow-primary'}`}
                 id={`otp-${i}`}
               />
             ))}
@@ -103,7 +103,7 @@ export default function OTPVerifyPage() {
             {loading ? 'Verifying...' : 'Verify Email'}
           </button>
 
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-500 text-sm">
             Didn't receive it?{' '}
             <button
               onClick={handleResend}
@@ -114,7 +114,7 @@ export default function OTPVerifyPage() {
             </button>
           </p>
 
-          <Link to="/register" className="inline-block mt-4 text-sm text-slate-500 hover:text-slate-400">
+          <Link to="/register" className="inline-block mt-4 text-sm text-slate-500 hover:text-slate-500">
             ← Back to register
           </Link>
         </div>

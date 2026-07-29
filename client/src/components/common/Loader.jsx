@@ -3,7 +3,7 @@ export default function Loader({ fullScreen = false, size = 'md' }) {
 
   const spinner = (
     <div className="flex flex-col items-center gap-3">
-      <div className={`${sizes[size]} rounded-full border-2 border-dark-600 border-t-primary-500 animate-spin`} />
+      <div className={`${sizes[size]} rounded-full border-2 border-slate-200 border-t-primary-500 animate-spin`} />
       {fullScreen && (
         <p className="text-slate-500 text-sm animate-pulse">Loading...</p>
       )}
@@ -12,7 +12,7 @@ export default function Loader({ fullScreen = false, size = 'md' }) {
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-dark-900 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-slate-50 flex items-center justify-center z-50">
         <div className="flex flex-col items-center gap-4">
           <div className="text-3xl font-bold gradient-text">💰 ExpenseTracker</div>
           {spinner}

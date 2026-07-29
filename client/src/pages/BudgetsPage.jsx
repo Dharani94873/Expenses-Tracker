@@ -25,11 +25,11 @@ function BudgetCard({ budget, onDelete }) {
     <div className="card-hover p-5">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-dark-700 flex items-center justify-center text-xl">
+          <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-xl">
             {budget.category?.icon || '💰'}
           </div>
           <div>
-            <p className="font-semibold text-slate-200">{budget.category?.name}</p>
+            <p className="font-semibold text-slate-800">{budget.category?.name}</p>
             <p className="text-xs text-slate-500">
               {MONTHS_NAMES[budget.month - 1]} {budget.year}
             </p>
@@ -43,7 +43,7 @@ function BudgetCard({ budget, onDelete }) {
       {/* Progress bar */}
       <div className="space-y-2 mb-3">
         <div className="flex justify-between text-xs">
-          <span className="text-slate-400">Spent</span>
+          <span className="text-slate-500">Spent</span>
           <span style={{ color }} className="font-bold">{budget.percent}%</span>
         </div>
         <div className="progress-bar">
@@ -54,17 +54,17 @@ function BudgetCard({ budget, onDelete }) {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-2 text-center">
-        <div className="bg-dark-700 rounded-lg p-2">
+        <div className="bg-slate-100 rounded-lg p-2">
           <p className="text-xs text-slate-500">Budget</p>
-          <p className="text-sm font-bold text-slate-200">${budget.limitAmount.toFixed(0)}</p>
+          <p className="text-sm font-bold text-slate-800">${budget.limitAmount.toFixed(0)}</p>
         </div>
-        <div className="bg-dark-700 rounded-lg p-2">
+        <div className="bg-slate-100 rounded-lg p-2">
           <p className="text-xs text-slate-500">Spent</p>
           <p className="text-sm font-bold" style={{ color: budget.spent > budget.limitAmount ? '#ff5252' : '#e2e8f0' }}>
             ${budget.spent.toFixed(0)}
           </p>
         </div>
-        <div className="bg-dark-700 rounded-lg p-2">
+        <div className="bg-slate-100 rounded-lg p-2">
           <p className="text-xs text-slate-500">Left</p>
           <p className="text-sm font-bold" style={{ color: budget.remaining > 0 ? '#00e676' : '#ff5252' }}>
             ${budget.remaining.toFixed(0)}
@@ -108,7 +108,7 @@ function BudgetModal({ onClose, onSaved, categories }) {
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modal">
         <div className="modal-header">
-          <h2 className="font-bold text-slate-100">Set Budget</h2>
+          <h2 className="font-bold text-slate-900">Set Budget</h2>
           <button onClick={onClose} className="btn-icon btn-ghost"><X size={16} /></button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="modal-body space-y-4">
@@ -250,7 +250,7 @@ export default function BudgetsPage() {
       ) : budgets.length === 0 ? (
         <div className="card p-12 text-center">
           <Target size={48} className="mx-auto text-slate-600 mb-4" />
-          <h3 className="text-lg font-semibold text-slate-300 mb-2">No budgets set</h3>
+          <h3 className="text-lg font-semibold text-slate-700 mb-2">No budgets set</h3>
           <p className="text-slate-500 text-sm mb-4">Set spending limits to stay on track</p>
           <button onClick={() => setShowModal(true)} className="btn-primary">
             <Plus size={16} />Create your first budget

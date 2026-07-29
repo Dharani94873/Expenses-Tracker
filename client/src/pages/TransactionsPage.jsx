@@ -67,19 +67,19 @@ function TransactionModal({ onClose, onSaved, editData, categories }) {
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modal">
         <div className="modal-header">
-          <h2 className="font-bold text-slate-100">{isEdit ? 'Edit Transaction' : 'Add Transaction'}</h2>
+          <h2 className="font-bold text-slate-900">{isEdit ? 'Edit Transaction' : 'Add Transaction'}</h2>
           <button onClick={onClose} className="btn-icon btn-ghost"><X size={16} /></button>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="modal-body space-y-4">
           {/* Type toggle */}
-          <div className="grid grid-cols-2 gap-2 p-1 bg-dark-700 rounded-xl">
+          <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
             {['expense', 'income'].map((t) => (
               <button key={t} type="button"
                 onClick={() => setValue('type', t)}
                 className={`py-2.5 rounded-xl text-sm font-semibold capitalize transition-all duration-200
                   ${selectedType === t
                     ? t === 'expense' ? 'bg-accent-red/20 text-accent-red' : 'bg-accent-green/20 text-accent-green'
-                    : 'text-slate-500 hover:text-slate-300'}`}>
+                    : 'text-slate-500 hover:text-slate-700'}`}>
                 {t === 'expense' ? '💸' : '💰'} {t}
               </button>
             ))}
@@ -245,7 +245,7 @@ export default function TransactionsPage() {
         </div>
 
         {showFilters && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2 border-t border-dark-600 animate-slide-down">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2 border-t border-slate-200 animate-slide-down">
             <select className="select" value={filters.type}
               onChange={(e) => { setFilters(p => ({ ...p, type: e.target.value })); setPage(1); }}>
               <option value="">All Types</option>
@@ -299,18 +299,18 @@ export default function TransactionsPage() {
             ) : (
               transactions.map((tx) => (
                 <tr key={tx._id}>
-                  <td className="text-slate-400 text-xs">{format(new Date(tx.date), 'MMM d, yyyy')}</td>
+                  <td className="text-slate-500 text-xs">{format(new Date(tx.date), 'MMM d, yyyy')}</td>
                   <td>
-                    <p className="text-slate-200 font-medium">{tx.description || '—'}</p>
+                    <p className="text-slate-800 font-medium">{tx.description || '—'}</p>
                     {tx.notes && <p className="text-xs text-slate-500 truncate max-w-[180px]">{tx.notes}</p>}
                   </td>
                   <td>
-                    <span className="flex items-center gap-1.5 text-slate-300">
+                    <span className="flex items-center gap-1.5 text-slate-700">
                       <span>{tx.category?.icon}</span>
                       <span className="text-xs">{tx.category?.name}</span>
                     </span>
                   </td>
-                  <td className="text-xs text-slate-400 capitalize">{tx.paymentMethod?.replace('_', ' ')}</td>
+                  <td className="text-xs text-slate-500 capitalize">{tx.paymentMethod?.replace('_', ' ')}</td>
                   <td>
                     <span className={`badge ${tx.type === 'income' ? 'badge-income' : 'badge-expense'}`}>
                       {tx.type}
@@ -344,7 +344,7 @@ export default function TransactionsPage() {
 
       {/* Pagination */}
       {pagination.pages > 1 && (
-        <div className="flex items-center justify-between text-sm text-slate-400">
+        <div className="flex items-center justify-between text-sm text-slate-500">
           <p>Page {pagination.page} of {pagination.pages} · {pagination.total} records</p>
           <div className="flex gap-2">
             <button onClick={() => setPage(p => p - 1)} disabled={page === 1}
@@ -371,8 +371,8 @@ export default function TransactionsPage() {
           <div className="modal max-w-sm animate-slide-up" onClick={e => e.stopPropagation()}>
             <div className="modal-body text-center py-6">
               <div className="text-4xl mb-3">🗑️</div>
-              <h3 className="text-lg font-bold text-slate-100 mb-2">Delete Transaction?</h3>
-              <p className="text-slate-400 text-sm">This action cannot be undone.</p>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Delete Transaction?</h3>
+              <p className="text-slate-500 text-sm">This action cannot be undone.</p>
             </div>
             <div className="modal-footer justify-center">
               <button onClick={() => setDeleteId(null)} className="btn-secondary">Cancel</button>

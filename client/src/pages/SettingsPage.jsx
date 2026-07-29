@@ -20,11 +20,11 @@ const passwordSchema = yup.object({
 function SectionCard({ icon: Icon, title, children }) {
   return (
     <div className="card p-6 space-y-5">
-      <div className="flex items-center gap-3 border-b border-dark-600 pb-4">
+      <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
         <div className="w-9 h-9 rounded-xl bg-primary-500/10 text-primary-400 flex items-center justify-center">
           <Icon size={18} />
         </div>
-        <h2 className="font-bold text-slate-100">{title}</h2>
+        <h2 className="font-bold text-slate-900">{title}</h2>
       </div>
       {children}
     </div>
@@ -141,7 +141,7 @@ export default function SettingsPage() {
             <input type="file" accept="image/*" className="sr-only" onChange={handleAvatarChange} />
           </label>
           <div>
-            <p className="font-semibold text-slate-200">{user?.name}</p>
+            <p className="font-semibold text-slate-800">{user?.name}</p>
             <p className="text-slate-500 text-sm">{user?.email}</p>
             <p className="text-xs text-slate-600 mt-0.5">Click avatar to change photo</p>
           </div>
@@ -195,7 +195,7 @@ export default function SettingsPage() {
                   {...passwordForm.register(field)}
                 />
                 <button type="button" onClick={() => togglePassword(field)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700">
                   {showPassword[field] ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -214,7 +214,7 @@ export default function SettingsPage() {
       <SectionCard icon={Shield} title="Two-Factor Authentication">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-slate-200 font-medium">
+            <p className="text-slate-800 font-medium">
               {user?.twoFAEnabled ? '✅ 2FA is enabled' : '2FA is disabled'}
             </p>
             <p className="text-slate-500 text-sm mt-1">
@@ -233,8 +233,8 @@ export default function SettingsPage() {
         </div>
 
         {showQR && qrCode && (
-          <div className="border border-dark-600 rounded-xl p-5 space-y-4 animate-slide-down">
-            <p className="text-sm text-slate-300">
+          <div className="border border-slate-200 rounded-xl p-5 space-y-4 animate-slide-down">
+            <p className="text-sm text-slate-700">
               Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)
             </p>
             <div className="flex justify-center">
@@ -258,7 +258,7 @@ export default function SettingsPage() {
       {/* Danger Zone */}
       <div className="card p-5 border-accent-red/20">
         <h2 className="font-bold text-accent-red mb-3 flex items-center gap-2">⚠️ Danger Zone</h2>
-        <p className="text-slate-400 text-sm mb-4">These actions cannot be undone.</p>
+        <p className="text-slate-500 text-sm mb-4">These actions cannot be undone.</p>
         <button className="btn-danger btn-sm" onClick={() => toast.error('Contact support to delete your account')}>
           Delete Account
         </button>

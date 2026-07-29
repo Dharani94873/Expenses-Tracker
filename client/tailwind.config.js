@@ -44,8 +44,8 @@ export default {
         'glow-primary': '0 0 20px rgba(108, 99, 255, 0.3)',
         'glow-cyan': '0 0 20px rgba(0, 212, 255, 0.3)',
         'glow-green': '0 0 20px rgba(0, 230, 118, 0.3)',
-        card: '0 4px 24px rgba(0,0,0,0.4)',
-        'card-hover': '0 8px 32px rgba(108,99,255,0.2)',
+        card: '0 4px 24px rgba(0,0,0,0.06)',
+        'card-hover': '0 8px 32px rgba(108,99,255,0.15)',
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-out',

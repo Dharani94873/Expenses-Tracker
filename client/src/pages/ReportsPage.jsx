@@ -61,11 +61,11 @@ export default function ReportsPage() {
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           {/* View mode */}
-          <div className="flex bg-dark-700 rounded-xl p-1">
+          <div className="flex bg-slate-100 rounded-xl p-1">
             {['monthly', 'yearly'].map(m => (
               <button key={m} onClick={() => setViewMode(m)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
-                  viewMode === m ? 'bg-primary-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                  viewMode === m ? 'bg-primary-600 text-white' : 'text-slate-500 hover:text-slate-800'
                 }`}>
                 {m}
               </button>
@@ -106,7 +106,7 @@ export default function ReportsPage() {
       <div className="grid lg:grid-cols-5 gap-4">
         {/* Income vs Expense Bar Chart */}
         <div className="lg:col-span-3 chart-container">
-          <h3 className="font-semibold text-slate-200 mb-4 flex items-center gap-2">
+          <h3 className="font-semibold text-slate-800 mb-4 flex items-center gap-2">
             <BarChart2 size={18} className="text-primary-400" />
             Income vs Expenses ({year})
           </h3>
@@ -136,7 +136,7 @@ export default function ReportsPage() {
 
         {/* Category Pie */}
         <div className="lg:col-span-2 chart-container">
-          <h3 className="font-semibold text-slate-200 mb-4">Spending by Category</h3>
+          <h3 className="font-semibold text-slate-800 mb-4">Spending by Category</h3>
           {loading ? (
             <div className="skeleton h-56 rounded-xl" />
           ) : data?.categoryBreakdown?.length > 0 ? (
@@ -156,12 +156,12 @@ export default function ReportsPage() {
               <div className="mt-3 space-y-1.5 max-h-28 overflow-y-auto scrollbar-hide">
                 {data.categoryBreakdown.map((cat, i) => (
                   <div key={i} className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-1.5 text-slate-400">
+                    <span className="flex items-center gap-1.5 text-slate-500">
                       <span className="w-2 h-2 rounded-full flex-shrink-0"
                         style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
                       {cat.icon} {cat.name}
                     </span>
-                    <span className="text-slate-200 font-medium">${cat.total.toFixed(0)}</span>
+                    <span className="text-slate-800 font-medium">${cat.total.toFixed(0)}</span>
                   </div>
                 ))}
               </div>
@@ -174,7 +174,7 @@ export default function ReportsPage() {
 
       {/* Export section */}
       <div className="card p-5">
-        <h3 className="font-semibold text-slate-200 mb-1">Export Report</h3>
+        <h3 className="font-semibold text-slate-800 mb-1">Export Report</h3>
         <p className="text-slate-500 text-sm mb-4">
           Download your {MONTHS_NAMES[month - 1]} {year} financial report
         </p>
