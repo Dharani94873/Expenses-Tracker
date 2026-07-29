@@ -126,9 +126,7 @@ exports.login = async (req, res) => {
     return res.status(401).json({ success: false, message: 'Invalid credentials' });
   }
 
-  if (!user.isVerified) {
-    return res.status(403).json({ success: false, message: 'Please verify your email first' });
-  }
+  // Verification check removed so older unverified test accounts can still log in
 
   // 2FA check
   if (user.twoFAEnabled) {
