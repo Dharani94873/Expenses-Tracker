@@ -1,0 +1,254 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base Styles ─────────────────────────────────────────── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-900 text-slate-100 font-sans antialiased;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-800;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-500;
+  }
+
+  ::selection {
+    @apply bg-primary-600 text-white;
+  }
+}
+
+/* ── Component Classes ───────────────────────────────────── */
+@layer components {
+
+  /* Cards */
+  .card {
+    @apply bg-dark-800 rounded-2xl border border-dark-600 shadow-card transition-all duration-300;
+  }
+  .card-hover {
+    @apply card hover:border-primary-600/40 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+  .glass-card {
+    @apply bg-dark-800/60 backdrop-blur-xl rounded-2xl border border-white/10 shadow-card;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm
+           transition-all duration-200 cursor-pointer select-none whitespace-nowrap;
+  }
+  .btn-primary {
+    @apply btn bg-gradient-primary text-white hover:opacity-90 hover:scale-[1.02] hover:shadow-glow-primary
+           active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100;
+  }
+  .btn-secondary {
+    @apply btn bg-dark-700 text-slate-200 border border-dark-500 hover:border-primary-600/50
+           hover:bg-dark-600 active:scale-[0.98];
+  }
+  .btn-danger {
+    @apply btn bg-accent-red/10 text-accent-red border border-accent-red/30
+           hover:bg-accent-red hover:text-white active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply btn text-slate-400 hover:text-slate-100 hover:bg-dark-700 active:scale-[0.98];
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs rounded-lg;
+  }
+  .btn-lg {
+    @apply px-6 py-3.5 text-base rounded-xl;
+  }
+  .btn-icon {
+    @apply btn p-2.5 rounded-xl;
+  }
+
+  /* Inputs */
+  .input {
+    @apply w-full bg-dark-700 border border-dark-500 rounded-xl px-4 py-3 text-slate-100
+           placeholder-slate-500 text-sm outline-none
+           focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20
+           transition-all duration-200;
+  }
+  .input-error {
+    @apply border-accent-red/60 focus:border-accent-red focus:ring-accent-red/20;
+  }
+  .label {
+    @apply block text-sm font-medium text-slate-300 mb-1.5;
+  }
+  .form-group {
+    @apply space-y-1.5;
+  }
+  .error-msg {
+    @apply text-accent-red text-xs mt-1 flex items-center gap-1;
+  }
+
+  /* Select */
+  .select {
+    @apply input appearance-none cursor-pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+  .badge-income {
+    @apply badge bg-accent-green/10 text-accent-green border border-accent-green/20;
+  }
+  .badge-expense {
+    @apply badge bg-accent-red/10 text-accent-red border border-accent-red/20;
+  }
+  .badge-info {
+    @apply badge bg-primary-500/10 text-primary-400 border border-primary-500/20;
+  }
+  .badge-warning {
+    @apply badge bg-accent-amber/10 text-accent-amber border border-accent-amber/20;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-primary bg-clip-text text-transparent;
+  }
+
+  /* Summary cards */
+  .stat-card {
+    @apply card p-5 flex flex-col gap-3 hover:border-primary-600/30 transition-all duration-300;
+  }
+
+  /* Page header */
+  .page-header {
+    @apply flex items-center justify-between mb-6 flex-wrap gap-3;
+  }
+  .page-title {
+    @apply text-2xl font-bold text-slate-100;
+  }
+
+  /* Table */
+  .table-container {
+    @apply card overflow-hidden;
+  }
+  .table {
+    @apply w-full text-sm text-left;
+  }
+  .table thead th {
+    @apply px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider bg-dark-700 border-b border-dark-600;
+  }
+  .table tbody tr {
+    @apply border-b border-dark-700 hover:bg-dark-700/50 transition-colors duration-150;
+  }
+  .table tbody td {
+    @apply px-4 py-3.5 text-slate-300;
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply bg-dark-700 rounded-lg animate-pulse;
+    background: linear-gradient(90deg, #1a1a2e 25%, #252d4a 50%, #1a1a2e 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply h-2 rounded-full bg-dark-600 overflow-hidden;
+  }
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+  }
+  .modal {
+    @apply glass-card w-full max-w-lg shadow-2xl animate-slide-up max-h-[90vh] overflow-y-auto;
+  }
+  .modal-header {
+    @apply flex items-center justify-between p-5 border-b border-dark-600;
+  }
+  .modal-body {
+    @apply p-5;
+  }
+  .modal-footer {
+    @apply flex items-center justify-end gap-3 p-5 border-t border-dark-600;
+  }
+
+  /* Sidebar */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-400
+           hover:text-slate-100 hover:bg-dark-700 transition-all duration-200 cursor-pointer;
+  }
+  .sidebar-link.active {
+    @apply text-primary-400 bg-primary-500/10 border border-primary-500/20;
+  }
+
+  /* Notification dot */
+  .notification-dot {
+    @apply absolute -top-1 -right-1 w-4 h-4 bg-accent-red rounded-full flex items-center justify-center
+           text-white text-[10px] font-bold border-2 border-dark-900;
+  }
+
+  /* Chart container */
+  .chart-container {
+    @apply card p-5;
+  }
+}
+
+/* ── Utilities ───────────────────────────────────────────── */
+@layer utilities {
+  .text-income {
+    color: #00e676;
+  }
+  .text-expense {
+    color: #ff5252;
+  }
+  .bg-income-soft {
+    background-color: rgba(0, 230, 118, 0.1);
+  }
+  .bg-expense-soft {
+    background-color: rgba(255, 82, 82, 0.1);
+  }
+  .border-income {
+    border-color: rgba(0, 230, 118, 0.2);
+  }
+  .border-expense {
+    border-color: rgba(255, 82, 82, 0.2);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .transition-base {
+    @apply transition-all duration-200 ease-in-out;
+  }
+}
