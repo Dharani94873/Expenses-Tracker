@@ -17,8 +17,21 @@ const logger = require('./utils/logger');
 
 const app = express();
 
-// ─── Connect DB & Seed ────────────────────────────────────────
-connectDB().then(() => seedCategories());
+// ─── Connect DB Middleware (Serverless Safe) ──────────────────
+let isDbConnected = false;
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    if (!isDbConnected) {
+      isDbConnected = true;
+      seedCategories().catch(console.error);
+    }
+    next();
+  } catch (err) {
+    console.error('Database Connection Error:', err);
+    res.status(500).json({ success: false, message: 'Database connection failed' });
+  }
+});
 
 // ─── Security Middleware ──────────────────────────────────────
 app.use(helmet({
