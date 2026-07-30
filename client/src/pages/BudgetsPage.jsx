@@ -83,14 +83,23 @@ function BudgetCard({ budget, onDelete, symbol }) {
   );
 }
 
-function BudgetModal({ onClose, onSaved, categories }) {
+function BudgetModal({ onClose, onSaved, categories, budgets, currentMonth, currentYear }) {
   const now = new Date();
   const { symbol } = useCurrency();
+
+  // IDs of categories that already have a budget this month
+  const budgetedCategoryIds = new Set(budgets.map(b => b.category?._id || b.category));
+
+  // Only show expense/both categories that don't already have a budget this month
+  const availableCategories = categories.filter(
+    c => (c.type === 'expense' || c.type === 'both') && !budgetedCategoryIds.has(c._id)
+  );
+
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      month: now.getMonth() + 1,
-      year: now.getFullYear(),
+      month: currentMonth || now.getMonth() + 1,
+      year: currentYear || now.getFullYear(),
       alertThresholdPercent: 80,
     },
   });
@@ -116,12 +125,18 @@ function BudgetModal({ onClose, onSaved, categories }) {
         <form onSubmit={handleSubmit(onSubmit)} className="modal-body space-y-4">
           <div className="form-group">
             <label className="label">Category</label>
-            <select className={`select ${errors.category ? 'input-error' : ''}`} {...register('category')}>
-              <option value="">Select category</option>
-              {categories.filter(c => c.type === 'expense' || c.type === 'both').map(c => (
-                <option key={c._id} value={c._id}>{c.icon} {c.name}</option>
-              ))}
-            </select>
+            {availableCategories.length === 0 ? (
+              <div className="text-center py-4 text-slate-500 text-sm bg-slate-100 rounded-xl">
+                🎉 All categories already have a budget for this month!
+              </div>
+            ) : (
+              <select className={`select ${errors.category ? 'input-error' : ''}`} {...register('category')}>
+                <option value="">Select category</option>
+                {availableCategories.map(c => (
+                  <option key={c._id} value={c._id}>{c.icon} {c.name}</option>
+                ))}
+              </select>
+            )}
             {errors.category && <p className="error-msg">{errors.category.message}</p>}
           </div>
 
@@ -156,8 +171,12 @@ function BudgetModal({ onClose, onSaved, categories }) {
         </form>
         <div className="modal-footer">
           <button onClick={onClose} className="btn-secondary">Cancel</button>
-          <button onClick={handleSubmit(onSubmit)} disabled={isSubmitting} className="btn-primary">
-            {isSubmitting ? 'Saving...' : 'Set Budget'}
+          <button
+            onClick={availableCategories.length > 0 ? handleSubmit(onSubmit) : onClose}
+            disabled={isSubmitting}
+            className="btn-primary"
+          >
+            {isSubmitting ? 'Saving...' : availableCategories.length > 0 ? 'Set Budget' : 'Close'}
           </button>
         </div>
       </div>
@@ -268,7 +287,14 @@ export default function BudgetsPage() {
       )}
 
       {showModal && (
-        <BudgetModal onClose={() => setShowModal(false)} onSaved={fetchBudgets} categories={categories} />
+        <BudgetModal
+          onClose={() => setShowModal(false)}
+          onSaved={fetchBudgets}
+          categories={categories}
+          budgets={budgets}
+          currentMonth={month}
+          currentYear={year}
+        />
       )}
     </div>
   );
