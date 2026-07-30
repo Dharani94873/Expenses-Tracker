@@ -85,6 +85,7 @@ function BudgetCard({ budget, onDelete, symbol }) {
 
 function BudgetModal({ onClose, onSaved, categories }) {
   const now = new Date();
+  const { symbol } = useCurrency();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
