@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Download, BarChart2, FileText, FileSpreadsheet } from 'lucide-react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import { useCurrency } from '../hooks/useCurrency';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell, PieChart, Pie, Legend
@@ -11,6 +12,7 @@ const MONTHS_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct
 const PIE_COLORS = ['#6c63ff','#00d4ff','#00e676','#ffb74d','#ff5252','#ea80fc','#69f0ae','#80d8ff'];
 
 export default function ReportsPage() {
+  const { symbol } = useCurrency();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState('');
@@ -95,7 +97,7 @@ export default function ReportsPage() {
               <p className="text-2xl mb-1">{icon}</p>
               <p className="text-slate-500 text-xs mb-0.5">{label}</p>
               <p className={`text-xl font-bold ${color}`}>
-                {isStr ? value : `$${(value || 0).toFixed(2)}`}
+                {isStr ? value : `${symbol}${(value || 0).toFixed(2)}`}
               </p>
             </div>
           ))}
@@ -119,8 +121,8 @@ export default function ReportsPage() {
                 <XAxis dataKey="month" tickFormatter={m => MONTHS_NAMES[m-1]}
                   tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false}
-                  tickFormatter={v => `$${(v/1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v) => [`$${v.toFixed(2)}`]} contentStyle={{
+                  tickFormatter={v => `${symbol}${(v/1000).toFixed(0)}k`} />
+                <Tooltip formatter={(v) => [`${symbol}${v.toFixed(2)}`]} contentStyle={{
                   background: '#1a1a2e', border: '1px solid rgba(108,99,255,0.2)',
                   borderRadius: '12px', fontSize: 12 }} />
                 <Legend iconType="circle" iconSize={8}
@@ -149,7 +151,7 @@ export default function ReportsPage() {
                       <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={v => [`$${v.toFixed(2)}`]}
+                  <Tooltip formatter={v => [`${symbol}${v.toFixed(2)}`]}
                     contentStyle={{ background: '#1a1a2e', borderRadius: '12px', border: 'none', fontSize: 12 }} />
                 </PieChart>
               </ResponsiveContainer>
@@ -161,7 +163,7 @@ export default function ReportsPage() {
                         style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
                       {cat.icon} {cat.name}
                     </span>
-                    <span className="text-slate-800 font-medium">${cat.total.toFixed(0)}</span>
+                    <span className="text-slate-800 font-medium">{symbol}{cat.total.toFixed(0)}</span>
                   </div>
                 ))}
               </div>

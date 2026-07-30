@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import toast from 'react-hot-toast';
+import { useCurrency } from '../hooks/useCurrency';
 
 const MONTHS_NAMES = ['January','February','March','April','May','June',
   'July','August','September','October','November','December'];
@@ -17,7 +18,7 @@ const schema = yup.object({
   alertThresholdPercent: yup.number().min(1).max(100),
 });
 
-function BudgetCard({ budget, onDelete }) {
+function BudgetCard({ budget, onDelete, symbol }) {
   const pct = Math.min(budget.percent, 100);
   const color = pct >= 100 ? '#ff5252' : pct >= 80 ? '#ffb74d' : '#00e676';
 
@@ -56,18 +57,18 @@ function BudgetCard({ budget, onDelete }) {
       <div className="grid grid-cols-3 gap-2 text-center">
         <div className="bg-slate-100 rounded-lg p-2">
           <p className="text-xs text-slate-500">Budget</p>
-          <p className="text-sm font-bold text-slate-800">${budget.limitAmount.toFixed(0)}</p>
+          <p className="text-sm font-bold text-slate-800">{symbol}{budget.limitAmount.toFixed(0)}</p>
         </div>
         <div className="bg-slate-100 rounded-lg p-2">
           <p className="text-xs text-slate-500">Spent</p>
           <p className="text-sm font-bold" style={{ color: budget.spent > budget.limitAmount ? '#ff5252' : '#e2e8f0' }}>
-            ${budget.spent.toFixed(0)}
+            {symbol}{budget.spent.toFixed(0)}
           </p>
         </div>
         <div className="bg-slate-100 rounded-lg p-2">
           <p className="text-xs text-slate-500">Left</p>
           <p className="text-sm font-bold" style={{ color: budget.remaining > 0 ? '#00e676' : '#ff5252' }}>
-            ${budget.remaining.toFixed(0)}
+            {symbol}{budget.remaining.toFixed(0)}
           </p>
         </div>
       </div>
@@ -124,7 +125,7 @@ function BudgetModal({ onClose, onSaved, categories }) {
           </div>
 
           <div className="form-group">
-            <label className="label">Monthly Limit ($)</label>
+            <label className="label">Monthly Limit ({symbol})</label>
             <input type="number" step="0.01" placeholder="e.g. 500"
               className={`input ${errors.limitAmount ? 'input-error' : ''}`}
               {...register('limitAmount')} />
@@ -164,6 +165,7 @@ function BudgetModal({ onClose, onSaved, categories }) {
 }
 
 export default function BudgetsPage() {
+  const { symbol } = useCurrency();
   const [budgets, setBudgets] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -235,7 +237,7 @@ export default function BudgetsPage() {
             <div key={label} className="card p-4 text-center">
               <p className="text-slate-500 text-xs mb-1">{label}</p>
               <p className={`text-xl font-bold ${color}`}>
-                {isPercent ? value : `$${(value || 0).toFixed(0)}`}
+                {isPercent ? value : `${symbol}${(value || 0).toFixed(0)}`}
               </p>
             </div>
           ))}
@@ -259,7 +261,7 @@ export default function BudgetsPage() {
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {budgets.map((b) => (
-            <BudgetCard key={b._id} budget={b} onDelete={handleDelete} />
+            <BudgetCard key={b._id} budget={b} onDelete={handleDelete} symbol={symbol} />
           ))}
         </div>
       )}
