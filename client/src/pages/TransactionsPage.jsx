@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
+import { useCurrency } from '../hooks/useCurrency';
 
 const schema = yup.object({
   type: yup.string().oneOf(['income', 'expense']).required(),
@@ -162,6 +163,7 @@ function TransactionModal({ onClose, onSaved, editData, categories }) {
 }
 
 export default function TransactionsPage() {
+  const { symbol } = useCurrency();
   const [transactions, setTransactions] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -317,7 +319,7 @@ export default function TransactionsPage() {
                     </span>
                   </td>
                   <td className={`text-right font-bold ${tx.type === 'income' ? 'text-income' : 'text-expense'}`}>
-                    {tx.type === 'income' ? '+' : '-'}${tx.amount.toFixed(2)}
+                    {tx.type === 'income' ? '+' : '-'}{symbol}{tx.amount.toFixed(2)}
                   </td>
                   <td>
                     <div className="flex items-center justify-end gap-1">

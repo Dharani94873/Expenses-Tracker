@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useCurrency } from '../hooks/useCurrency';
 import api from '../services/api';
 import {
   TrendingUp, TrendingDown, DollarSign, PiggyBank,
@@ -15,7 +16,7 @@ import { format } from 'date-fns';
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const PIE_COLORS = ['#6c63ff','#00d4ff','#00e676','#ffb74d','#ff5252','#ea80fc','#69f0ae','#80d8ff','#f9e79f','#f1948a'];
 
-function StatCard({ icon: Icon, label, value, change, color, prefix = '$' }) {
+function StatCard({ icon: Icon, label, value, change, color, prefix }) {
   const isPositive = change >= 0;
   return (
     <div className="stat-card group cursor-default">
@@ -40,24 +41,24 @@ function StatCard({ icon: Icon, label, value, change, color, prefix = '$' }) {
   );
 }
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label, symbol }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="glass-card p-3 text-xs space-y-1">
       <p className="font-semibold text-slate-800 mb-1">{MONTHS[label - 1]}</p>
       {payload.map((p) => (
-        <p key={p.name} style={{ color: p.color }}>{p.name}: ${p.value?.toLocaleString()}</p>
+        <p key={p.name} style={{ color: p.color }}>{p.name}: {symbol}{p.value?.toLocaleString()}</p>
       ))}
     </div>
   );
 };
 
-const PieTooltip = ({ active, payload }) => {
+const PieTooltip = ({ active, payload, symbol }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="glass-card p-3 text-xs">
       <p className="font-semibold" style={{ color: payload[0].payload.color }}>{payload[0].name}</p>
-      <p className="text-slate-700">${payload[0].value?.toFixed(2)}</p>
+      <p className="text-slate-700">{symbol}{payload[0].value?.toFixed(2)}</p>
     </div>
   );
 };
@@ -76,6 +77,7 @@ function SkeletonCard() {
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { symbol } = useCurrency();
   const [data, setData] = useState(null);
   const [recentTx, setRecentTx] = useState([]);
   const [budgetAlerts, setBudgetAlerts] = useState([]);
@@ -132,11 +134,11 @@ export default function DashboardPage() {
         ) : (
           <>
             <StatCard icon={TrendingUp} label="Total Income" value={data?.summary.income || 0}
-              change={data?.summary.incomeChange} color="bg-accent-green/10 text-accent-green" />
+              change={data?.summary.incomeChange} color="bg-accent-green/10 text-accent-green" prefix={symbol} />
             <StatCard icon={TrendingDown} label="Total Expenses" value={data?.summary.expense || 0}
-              change={data?.summary.expenseChange} color="bg-accent-red/10 text-accent-red" />
+              change={data?.summary.expenseChange} color="bg-accent-red/10 text-accent-red" prefix={symbol} />
             <StatCard icon={DollarSign} label="Net Balance" value={Math.abs(data?.summary.balance || 0)}
-              color="bg-primary-500/10 text-primary-400" />
+              color="bg-primary-500/10 text-primary-400" prefix={symbol} />
             <StatCard icon={PiggyBank} label="Savings Rate" value={data?.summary.savingsRate || 0}
               prefix="" color="bg-accent-amber/10 text-accent-amber" />
           </>
@@ -176,8 +178,8 @@ export default function DashboardPage() {
                 <XAxis dataKey="month" tickFormatter={(m) => MONTHS[m - 1]}
                   tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false}
-                  tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
-                <Tooltip content={<CustomTooltip />} />
+                  tickFormatter={(v) => `${symbol}${(v / 1000).toFixed(0)}k`} />
+                <Tooltip content={<CustomTooltip symbol={symbol} />} />
                 <Legend iconType="circle" iconSize={8}
                   formatter={(v) => <span style={{ color: '#94a3b8', fontSize: 12 }}>{v}</span>} />
                 <Line type="monotone" dataKey="income" name="Income"
@@ -204,7 +206,7 @@ export default function DashboardPage() {
                       <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip content={<PieTooltip />} />
+                  <Tooltip content={<PieTooltip symbol={symbol} />} />
                 </PieChart>
               </ResponsiveContainer>
               <div className="mt-3 space-y-1.5 max-h-24 overflow-y-auto scrollbar-hide">
@@ -215,7 +217,7 @@ export default function DashboardPage() {
                         style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
                       {cat.icon} {cat.name}
                     </span>
-                    <span className="text-slate-800 font-medium">${cat.total.toFixed(0)}</span>
+                    <span className="text-slate-800 font-medium">{symbol}{cat.total.toFixed(0)}</span>
                   </div>
                 ))}
               </div>
@@ -271,7 +273,7 @@ export default function DashboardPage() {
                   </p>
                 </div>
                 <span className={`text-sm font-bold ${tx.type === 'income' ? 'text-income' : 'text-expense'}`}>
-                  {tx.type === 'income' ? '+' : '-'}${tx.amount.toFixed(2)}
+                  {tx.type === 'income' ? '+' : '-'}{symbol}{tx.amount.toFixed(2)}
                 </span>
               </div>
             ))}
